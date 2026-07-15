@@ -1,0 +1,13 @@
+import { useEffect, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Clock3, Search, X } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { useAppStore } from '@/store/use-app-store'
+
+const prompts = ['Search ideas, people, and topics', 'Try “system design”', 'Explore developer podcasts']
+export function SearchInput({ compact = false }: { compact?: boolean }) {
+  const navigate = useNavigate(); const recent = useAppStore((state) => state.recentSearches); const add = useAppStore((state) => state.addRecentSearch); const [value, setValue] = useState(''); const [focused, setFocused] = useState(false); const [prompt, setPrompt] = useState(0)
+  useEffect(() => { const timer = window.setInterval(() => setPrompt((current) => (current + 1) % prompts.length), 2600); return () => window.clearInterval(timer) }, [])
+  const submit = () => { const query = value.trim(); if (query) { add(query); navigate(`/search?q=${encodeURIComponent(query)}`); setFocused(false) } }
+  return <div className="relative w-full"><div className={`glass flex h-10 items-center gap-2 rounded-[var(--radius-md)] px-3 transition ${focused ? 'border-[var(--focus)] ring-2 ring-[var(--accent-soft)]' : 'hover:border-[var(--border-strong)]'}`}><Search size={16} className="shrink-0 text-[var(--muted)]"/><input value={value} onChange={(event) => setValue(event.target.value)} onFocus={() => setFocused(true)} onBlur={() => window.setTimeout(() => setFocused(false), 130)} onKeyDown={(event) => { if (event.key === 'Enter') submit() }} placeholder={prompts[prompt]} aria-label="Search NerdTube" className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-[var(--muted)]"/>{value && <button onClick={() => setValue('')} aria-label="Clear search" className="text-[var(--muted)] hover:text-[var(--text)]"><X size={15}/></button>}{!compact && <kbd className="hidden rounded border px-1.5 py-0.5 text-[10px] text-[var(--muted)] lg:block">⌘ K</kbd>}</div><AnimatePresence>{focused && recent.length > 0 && <motion.div className="glass absolute inset-x-0 top-[calc(100%+8px)] z-50 rounded-[var(--radius-lg)] p-1.5 shadow-[var(--shadow-float)]" initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }}><p className="px-2.5 py-1.5 text-label">Recent searches</p>{recent.map((item) => <button key={item} onMouseDown={() => { setValue(item); add(item); navigate(`/search?q=${encodeURIComponent(item)}`) }} className="flex w-full items-center gap-2 rounded-[var(--radius-md)] px-2.5 py-2 text-left text-sm text-[var(--text-secondary)] hover:bg-[var(--surface-hover)]"><Clock3 size={14} className="text-[var(--muted)]"/>{item}</button>)}</motion.div>}</AnimatePresence></div>
+}

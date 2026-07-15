@@ -1,0 +1,4 @@
+import { Home, Library, Search, Settings2 } from 'lucide-react'
+import { NavLink } from 'react-router-dom'
+const links = [{ label: 'Home', to: '/', icon: Home }, { label: 'Discover', to: '/search', icon: Search }, { label: 'Library', to: '/watch-later', icon: Library }, { label: 'Settings', to: '/settings', icon: Settings2 }]
+export function MobileNav() { return <nav aria-label="Mobile navigation" className="glass fixed inset-x-3 bottom-3 z-40 flex h-16 items-center justify-around rounded-[var(--radius-xl)] px-2 shadow-[var(--shadow-float)] lg:hidden">{links.map(({ label, to, icon: Icon }) => <NavLink key={to} to={to} className={({ isActive }) => `grid min-w-14 place-items-center gap-0.5 rounded-[var(--radius-md)] px-2 py-1.5 text-[10px] transition ${isActive ? 'text-[var(--accent)]' : 'text-[var(--muted)]'}`}>{({ isActive }) => <><Icon size={18} strokeWidth={isActive ? 2.4 : 1.8}/><span>{label}</span></>}</NavLink>)}</nav> }

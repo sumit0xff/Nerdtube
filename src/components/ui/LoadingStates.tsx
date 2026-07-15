@@ -1,0 +1,7 @@
+import { Skeleton } from '@/components/ui/primitives'
+export function HeaderSkeleton() { return <div className="flex h-[68px] items-center gap-3 border-b px-5"><Skeleton className="size-9"/><Skeleton className="h-7 w-24"/><Skeleton className="mx-auto h-10 w-full max-w-xl"/><Skeleton className="size-9 rounded-full"/></div> }
+export function SidebarSkeleton() { return <div className="space-y-2 p-3">{Array.from({ length: 10 }, (_, index) => <Skeleton key={index} className="h-10 w-full"/>)}</div> }
+export function CardSkeleton() { return <div className="space-y-3"><Skeleton className="aspect-video w-full rounded-[var(--radius-xl)]"/><Skeleton className="h-4 w-4/5"/><Skeleton className="h-3 w-2/5"/></div> }
+export function ListSkeleton() { return <div className="space-y-4">{Array.from({ length: 4 }, (_, index) => <div key={index} className="flex gap-4"><Skeleton className="h-24 w-40 shrink-0"/><div className="flex-1 space-y-3"><Skeleton className="h-4 w-3/4"/><Skeleton className="h-3 w-2/5"/><Skeleton className="h-3 w-full"/></div></div>)}</div> }
+export function WatchSkeleton() { return <div className="space-y-5"><Skeleton className="aspect-video w-full rounded-[var(--radius-xl)]"/><Skeleton className="h-7 w-3/4"/><Skeleton className="h-4 w-1/4"/><Skeleton className="h-20 w-full"/></div> }
+export function SettingsSkeleton() { return <div className="space-y-6">{Array.from({ length: 3 }, (_, index) => <Skeleton key={index} className="h-40 w-full rounded-[var(--radius-xl)]"/>)}</div> }
