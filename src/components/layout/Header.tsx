@@ -1,4 +1,4 @@
-import { Command, Menu, MoonStar, Search, SunMedium } from 'lucide-react'
+import { Menu, MoonStar, Search, SunMedium } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { Logo } from '@/components/ui/Logo'
 import { useAppStore } from '@/store/use-app-store'

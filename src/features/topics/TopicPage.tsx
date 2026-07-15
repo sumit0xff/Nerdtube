@@ -1,0 +1,7 @@
+import { useQuery } from '@tanstack/react-query'
+import { Link, useParams } from 'react-router-dom'
+import { VideoCard } from '@/components/video/VideoCard'
+import { getVideosByTopic } from '@/services/youtube'
+
+const pretty = (topic: string) => topic.replaceAll('-', ' ').replace(/\b\w/g, (letter) => letter.toUpperCase())
+export function TopicPage() { const { topic = 'programming' } = useParams(); const { data: videos = [], isLoading } = useQuery({ queryKey: ['videos', 'topic', topic], queryFn: () => getVideosByTopic(topic) }); const title = pretty(topic); return <div className="mx-auto max-w-[1500px] px-5 py-8 md:px-8 md:py-12"><Link to="/search" className="text-sm text-[var(--accent)]">Explore topics</Link><h1 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">{title}</h1><p className="mt-3 max-w-xl text-sm leading-relaxed text-[var(--muted)]">A focused collection selected to help you go deeper without endless scrolling.</p>{isLoading ? <p className="mt-10 text-sm text-[var(--muted)]">Gathering the best videos…</p> : videos.length ? <div className="mt-10 grid gap-x-5 gap-y-8 sm:grid-cols-2 xl:grid-cols-4">{videos.map((video, index) => <VideoCard key={video.id} video={video} index={index} showActions/>)}</div> : <div className="mt-10 rounded-2xl border bg-[var(--surface)] p-8 text-sm text-[var(--muted)]">This collection is taking shape. Try another topic from the sidebar.</div>}</div> }
