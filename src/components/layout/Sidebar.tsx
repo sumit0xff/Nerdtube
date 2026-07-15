@@ -1,0 +1,7 @@
+import { NavLink } from 'react-router-dom'
+import { Download } from 'lucide-react'
+import { libraryNavigation, primaryNavigation } from '@/config/navigation'
+import type { NavItem } from '@/config/navigation'
+import { useAppStore } from '@/store/use-app-store'
+function Links({ items }: { items: NavItem[] }) { return <>{items.map(({ label, to, icon: Icon }) => <NavLink key={to} to={to} className={({ isActive }) => `group flex items-center gap-3 rounded-xl px-3 py-2 text-sm transition ${isActive ? 'bg-white/8 text-[var(--text)]' : 'text-[var(--muted)] hover:bg-white/5 hover:text-[var(--text)]`}><Icon size={17}/><span>{label}</span></NavLink>)}</> }
+export function Sidebar() { const collapsed = useAppStore((s) => s.isSidebarCollapsed); return <aside className={`fixed inset-y-18 left-0 z-20 hidden w-64 border-r bg-[color:color-mix(in_srgb,var(--canvas)_90%,transparent)] p-3 transition-transform duration-200 lg:block ${collapsed ? '-translate-x-full' : 'translate-x-0'}`}><nav aria-label="Primary navigation" className="h-full overflow-y-auto pr-1"><Links items={primaryNavigation}/><div className="my-4 border-t"/><p className="px-3 pb-2 text-[11px] font-semibold uppercase tracking-[.14em] text-[var(--muted)]">Your library</p><Links items={libraryNavigation}/><NavLink to="/downloads" className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm text-[var(--muted)] hover:bg-white/5"><Download size={17}/>Downloads</NavLink></nav></aside> }

@@ -1,0 +1,2 @@
+import { Play } from 'lucide-react'
+export function Logo() { return <a href="/" className="flex items-center gap-2.5 font-semibold tracking-tight" aria-label="NerdTube home"><span className="grid size-8 place-items-center rounded-[10px] bg-violet-500 text-white shadow-lg shadow-violet-500/20"><Play size={15} fill="currentColor" /></span><span className="text-[17px]">Nerd<span className="text-[var(--accent)]">Tube</span></span></a> }
